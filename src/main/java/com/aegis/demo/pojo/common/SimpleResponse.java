@@ -1,11 +1,9 @@
-package com.aegis.demo.pojo;
+package com.aegis.demo.pojo.common;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author 李成超

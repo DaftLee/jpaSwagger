@@ -1,6 +1,6 @@
 package com.aegis.demo.controller;
 
-import com.aegis.demo.pojo.SimpleResponse;
+import com.aegis.demo.pojo.common.SimpleResponse;
 import com.aegis.demo.pojo.Student;
 import com.aegis.demo.repository.StudentRepository;
 import io.swagger.annotations.*;
@@ -11,11 +11,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
+import javax.validation.constraints.NotEmpty;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -27,6 +28,7 @@ import java.util.*;
 @Api(tags = "学生接口")
 @RestController
 @RequestMapping("student")
+@Validated // SpringBoot-JSR-303验证框架
 public class StudentController {
     private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
     @Resource
@@ -80,14 +82,14 @@ public class StudentController {
         return simpleResponse;
     }
 
-    @ApiOperation(value = "通过姓名模糊查询学生列表")
+    @ApiOperation(value = "通过姓名模糊查询学生列表(加入JSR-303校验)")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page",defaultValue = "0",dataType = "int",paramType = "query",value = "分页页数",required = false,example = "0"),
             @ApiImplicitParam(name = "size",defaultValue = "5",dataType = "int",paramType = "query",value = "每页条数",required = false,example = "5"),
-            @ApiImplicitParam(name = "sName",dataType = "String",paramType = "query",value = "学生姓名",required = true)
+            @ApiImplicitParam(name = "sName",dataType = "String",paramType = "query",value = "学生姓名"/*,required = true*/)
     })
     @RequestMapping(value = "getByName",method = RequestMethod.GET)
-    public SimpleResponse<List<Student>> getByName(@RequestParam(value = "sName",required = false) String sName,@RequestParam(value = "page",defaultValue = "0") Integer page, @RequestParam(value = "size",defaultValue = "5") Integer size){
+    public SimpleResponse<List<Student>> getByName(@NotEmpty(message = "学生姓名不能为空") @RequestParam(value = "sName",required = false) String sName, @RequestParam(value = "page",defaultValue = "0") Integer page, @RequestParam(value = "size",defaultValue = "5") Integer size){
         SimpleResponse<List<Student>> simpleResponse = new SimpleResponse<>();
 
         try {
