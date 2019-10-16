@@ -45,7 +45,7 @@ import java.util.Map;
  * @date 2019/10/14 15:12
  * @description TODO
  **/
-@Api(description = "文章接口（es实现）")
+@Api(tags = "文章接口（es实现）")
 @RestController
 @RequestMapping("article")
 public class ArticleController {
@@ -61,11 +61,11 @@ public class ArticleController {
 
     @ApiOperation(value = "查询文章列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page",defaultValue = "0",dataType = "int",paramType = "query",value = "分页页数",required = false),
-            @ApiImplicitParam(name = "size",defaultValue = "5",dataType = "int",paramType = "query",value = "每页条数",required = false)
+            @ApiImplicitParam(name = "page",defaultValue = "0",dataType = "int",paramType = "query",value = "分页页数",required = false,example = "0"),
+            @ApiImplicitParam(name = "size",defaultValue = "5",dataType = "int",paramType = "query",value = "每页条数",required = false,example = "5")
     })
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public SimpleResponse<List<Article>> list(@RequestParam(value = "page",defaultValue = "0") Integer page, @RequestParam(value = "size",defaultValue = "5") Integer size){
+    public SimpleResponse<List<Article>> list(@RequestParam(value = "page",defaultValue = "0") int page, @RequestParam(value = "size",defaultValue = "5") int size){
         SimpleResponse<List<Article>> simpleResponse = new SimpleResponse<>();
         try {
             Sort sort = new Sort(Sort.Direction.DESC,"id");
@@ -87,8 +87,8 @@ public class ArticleController {
     }
     @ApiOperation(value = "查询列表(queryString、分页、高亮)")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page",defaultValue = "0",dataType = "int",paramType = "query",value = "分页页数",required = false),
-            @ApiImplicitParam(name = "size",defaultValue = "5",dataType = "int",paramType = "query",value = "每页条数",required = false),
+            @ApiImplicitParam(name = "page",defaultValue = "0",dataType = "int",paramType = "query",value = "分页页数",required = false,example = "0"),
+            @ApiImplicitParam(name = "size",defaultValue = "5",dataType = "int",paramType = "query",value = "每页条数",required = false,example = "5"),
             @ApiImplicitParam(name = "keyword",dataType = "String",paramType = "query",value = "关键字",required = true),
     })
     @RequestMapping(value = "/get",method = RequestMethod.GET)
@@ -169,8 +169,8 @@ public class ArticleController {
 
     @ApiOperation(value = "查询列表(根据文章title（reposirory方法）强匹配、不分词、分页、不高亮)")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page",defaultValue = "0",dataType = "int",paramType = "query",value = "分页页数",required = false),
-            @ApiImplicitParam(name = "size",defaultValue = "5",dataType = "int",paramType = "query",value = "每页条数",required = false),
+            @ApiImplicitParam(name = "page",defaultValue = "0",dataType = "int",paramType = "query",value = "分页页数",required = false,example = "0"),
+            @ApiImplicitParam(name = "size",defaultValue = "5",dataType = "int",paramType = "query",value = "每页条数",required = false,example = "5"),
             @ApiImplicitParam(name = "keyword",dataType = "String",paramType = "query",value = "关键字",required = true),
     })
     @RequestMapping(value = "/getByTitle",method = RequestMethod.GET)

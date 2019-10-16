@@ -24,7 +24,7 @@ import java.util.*;
  * @date 2019/10/9 17:07
  * @description TODO
  **/
-@Api(description = "学生接口")
+@Api(tags = "学生接口")
 @RestController
 @RequestMapping("student")
 public class StudentController {
@@ -34,11 +34,11 @@ public class StudentController {
 
     @ApiOperation(value = "查询学生列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page",defaultValue = "0",dataType = "int",paramType = "query",value = "分页页数",required = false),
-            @ApiImplicitParam(name = "size",defaultValue = "5",dataType = "int",paramType = "query",value = "每页条数",required = false)
+            @ApiImplicitParam(name = "page",defaultValue = "0",dataType = "int",paramType = "query",value = "分页页数",example = "0"),
+            @ApiImplicitParam(name = "size",defaultValue = "5",dataType = "int",paramType = "query",value = "每页条数",example = "5")
     })
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public SimpleResponse<List<Student>> list(@RequestParam(value = "page",defaultValue = "0") Integer page, @RequestParam(value = "size",defaultValue = "5") Integer size){
+    public SimpleResponse<List<Student>> list(@RequestParam(value = "page",defaultValue = "0") int page, @RequestParam(value = "size",defaultValue = "5") int size){
         SimpleResponse<List<Student>> simpleResponse = new SimpleResponse<>();
         try {
             Sort sort = new Sort(Sort.Direction.DESC,"sId");
@@ -59,7 +59,7 @@ public class StudentController {
     }
     @ApiOperation(value = "通过学生ID查询学生")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "sId",dataType = "int",paramType = "path",value = "学生ID",required = true)
+            @ApiImplicitParam(name = "sId",paramType = "path",value = "学生ID",required = true)
     })
     @RequestMapping(value = "/get/{sId}",method = RequestMethod.GET)
     public SimpleResponse<Student> get(@PathVariable String sId){
@@ -82,8 +82,8 @@ public class StudentController {
 
     @ApiOperation(value = "通过姓名模糊查询学生列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page",defaultValue = "0",dataType = "int",paramType = "query",value = "分页页数",required = false),
-            @ApiImplicitParam(name = "size",defaultValue = "5",dataType = "int",paramType = "query",value = "每页条数",required = false),
+            @ApiImplicitParam(name = "page",defaultValue = "0",dataType = "int",paramType = "query",value = "分页页数",required = false,example = "0"),
+            @ApiImplicitParam(name = "size",defaultValue = "5",dataType = "int",paramType = "query",value = "每页条数",required = false,example = "5"),
             @ApiImplicitParam(name = "sName",dataType = "String",paramType = "query",value = "学生姓名",required = true)
     })
     @RequestMapping(value = "getByName",method = RequestMethod.GET)
@@ -138,7 +138,7 @@ public class StudentController {
     }
     @ApiOperation(value = "通过ID删除学生")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "sId",dataType = "int",paramType = "path",value = "学生ID",required = true)
+            @ApiImplicitParam(name = "sId",paramType = "path",value = "学生ID",required = true,example = "01")
     })
     @RequestMapping(value = "/delete/{sId}",method = RequestMethod.DELETE)
     public SimpleResponse delete(@PathVariable(value = "sId") String sId){
@@ -186,8 +186,8 @@ public class StudentController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "sSex",dataType = "String",paramType = "query",value = "学生性别",required = true),
             @ApiImplicitParam(name = "sName",dataType = "String",paramType = "query",value = "学生名称(模糊匹配)",required = true),
-            @ApiImplicitParam(name = "page",dataType = "int",paramType = "query",value = "分页页数"),
-            @ApiImplicitParam(name = "size",dataType = "int",paramType = "query",value = "每页条数")
+            @ApiImplicitParam(name = "page",dataType = "int",paramType = "query",value = "分页页数",example = "0"),
+            @ApiImplicitParam(name = "size",dataType = "int",paramType = "query",value = "每页条数",example = "5")
     })
     @RequestMapping(value = "/getbySex",method = RequestMethod.GET)
     public SimpleResponse<List<Student>> getbySex(@RequestParam(value = "sSex",required = true) String sSex,@RequestParam(value = "sName",required = true) String sName,@RequestParam(value = "page",defaultValue = "0") Integer page, @RequestParam(value = "size",defaultValue = "5") Integer size){

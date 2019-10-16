@@ -7,6 +7,7 @@ import org.apache.lucene.queryparser.xml.QueryBuilderFactory;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.hibernate.cfg.annotations.QueryBinder;
+import org.jasypt.util.text.BasicTextEncryptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,4 +73,17 @@ public class DemoApplicationTests {
             System.out.println(article);
         });
     }
+
+    @Test
+    public void generatePassword(){
+        BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+        //加密所需的salt(盐)
+        textEncryptor.setPassword("AegisData");
+        //要加密的数据（数据库的用户名或密码）
+        String username = textEncryptor.encrypt("psg");
+        String password = textEncryptor.encrypt("psg");
+        System.out.println("username:"+username);
+        System.out.println("password:"+password);
+    }
+
 }
